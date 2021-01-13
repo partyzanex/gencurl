@@ -47,28 +47,28 @@ func TestFromRequest(t *testing.T) {
 		defer resp.Body.Close()
 	*/
 
-	if want := fmt.Sprintf("-X %s", method); !strings.Contains(curl, want) {
-		t.Errorf("missing ", want)
+	if want := fmt.Sprintf("--request %s", method); !strings.Contains(curl, want) {
+		t.Errorf("missing %s", want)
 	}
 	if want := fmt.Sprintf("--header '%s: %s'", headerContentType, contentType); !strings.Contains(curl, want) {
-		t.Errorf("missing ", want)
+		t.Errorf("missing %s", want)
 	}
 	if want := fmt.Sprintf("--header '%s: %s'", headerXCustom, xCustom1); !strings.Contains(curl, want) {
-		t.Errorf("missing ", want)
+		t.Errorf("missing %s", want)
 	}
 	if want := fmt.Sprintf("--header '%s: %s'", headerXCustom, xCustom2); !strings.Contains(curl, want) {
-		t.Errorf("missing ", want)
+		t.Errorf("missing %s", want)
 	}
 	if want := fmt.Sprintf("-d '%s'", string(data)); !strings.Contains(curl, want) {
-		t.Errorf("missing ", want)
+		t.Errorf("missing %s", want)
 	}
 
 	// Check the body was not emptied
-	bytes, err := ioutil.ReadAll(req.Body)
+	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		t.Errorf("expected no errors reading body, got %s", err)
 	}
-	if len(bytes) == 0 {
+	if len(b) == 0 {
 		t.Errorf("expected body to not be drained.")
 	}
 }

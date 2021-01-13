@@ -14,7 +14,7 @@ import (
 // encountered while executing requests. Be sure to capture your curl before
 // you execute the request if you want to capture the post body.
 func FromRequest(r *http.Request) string {
-	ret := fmt.Sprintf("curl -v -X %s %s %s %s %s %s",
+	ret := fmt.Sprintf(`curl --location --request %s %s %s %s "%s" %s`,
 		r.Method,
 		getHeaders(r.Header, r.Host),
 		ifSet(r.UserAgent(), fmt.Sprintf("--user-agent '%s'", r.UserAgent())),
